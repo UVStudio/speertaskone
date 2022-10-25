@@ -1,0 +1,17 @@
+[
+  {
+    "content": "first test tweet content",
+    "user": "user",
+    "timeStamp": "12345678"
+  },
+  {
+    "content": "second test tweet content",
+    "user": "user",
+    "timeStamp": "12345679"
+  },
+  {
+    "content": "third test tweet content",
+    "user": "user",
+    "timeStamp": "12345680"
+  }
+]

@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Please provide your name'],
     unique: 'Name already exists',
   },
-  hashed_password: {
+  hashedPassword: {
     type: String,
     required: [true, 'Please add a password'],
     minlength: 6,
@@ -18,13 +18,13 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.statics.generateSalt = () => {
   return Math.round(new Date().valueOf() * Math.random()) + '';
+  //return '100';
 };
 
 UserSchema.statics.generateHash = (password, salt) => {
   try {
-    const hmac = crypto.createHmac('sha1', salt);
-    hmac.update(password);
-    return hmac.digest('hex');
+    const hmac = crypto.createHmac('sha256', salt);
+    return hmac.update(password).digest('hex');
   } catch (err) {
     return err;
   }
@@ -34,13 +34,13 @@ UserSchema.virtual('password')
   .set(function (password) {
     this._password = password;
     this.salt = this.model('User').generateSalt();
-    this.hashed_password = this.model('User').generateHash(password, this.salt);
+    this.hashedPassword = this.model('User').generateHash(password, this.salt);
   })
   .get(function () {
     return this._password;
   });
 
-UserSchema.path('hashed_password').validate(function (v) {
+UserSchema.path('hashedPassword').validate(function () {
   if (this._password && this._password.length < 6) {
     this.invalidate('password', 'Password must be at least 6 characters.');
   }
@@ -50,13 +50,24 @@ UserSchema.path('hashed_password').validate(function (v) {
 }, null);
 
 UserSchema.statics.authenticate = function (
-  given_password,
-  hashed_password,
+  givenPassword,
+  hashedPassword,
   salt
 ) {
   return (
-    UserSchema.statics.generateHash(given_password, salt) === hashed_password
+    UserSchema.statics.generateHash(givenPassword, salt) === hashedPassword
   );
 };
 
-module.exports = mongoose.model('User', UserSchema);
+UserSchema.methods.getSignedJwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+};
+
+// UserSchema.methods.matchPassword = async function (enteredPassword, user) {
+
+// };
+
+const User = mongoose.model('User', UserSchema);
+module.exports = User;

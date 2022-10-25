@@ -31,14 +31,14 @@ describe('User Password Authentication', () => {
       throw new Error(err);
     }
   });
-  it('should save a user with hashed_password and salt attributes', async () => {
+  it('should save a user with hashedPassword and salt attributes', async () => {
     try {
       let result = await new User({
         name: 'sam',
         password: '888888',
       }).save();
       expect(Object.keys(result._doc)).toEqual(
-        expect.arrayContaining(['salt', 'hashed_password'])
+        expect.arrayContaining(['salt', 'hashedPassword'])
       );
     } catch (err) {
       throw new Error(err);
@@ -76,7 +76,7 @@ describe('User Password Authentication', () => {
       let wrongPassword = '123456';
       let auth = User.authenticate(
         wrongPassword,
-        result.hashed_password,
+        result.hashedPassword,
         result.salt
       );
       expect(auth).toEqual(false);
@@ -94,7 +94,7 @@ describe('User Password Authentication', () => {
       let rightPassword = '888888';
       let auth = User.authenticate(
         rightPassword,
-        result.hashed_password,
+        result.hashedPassword,
         result.salt
       );
       expect(auth).toEqual(true);
