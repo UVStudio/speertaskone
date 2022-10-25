@@ -40,13 +40,13 @@ exports.getTweetById = async (req, res, next) => {
 };
 
 exports.updateTweet = async (req, res, next) => {
-  console.log('called');
   try {
     const user = await User.findById(req.user.id);
     const tweet = await Tweet.findById(req.params.tweetId);
 
-    if (user.id !== tweet.user.toString())
+    if (user.id !== tweet.user.toString()) {
       throw new Error('You are not authorized to update this tweet!');
+    }
 
     const updatedTweet = await Tweet.findByIdAndUpdate(
       req.params.tweetId,

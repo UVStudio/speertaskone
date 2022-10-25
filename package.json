@@ -2,9 +2,9 @@
   "name": "speertaskone",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "test": "jest --watchAll --detectOpenHandles",
+    "test": "jest --detectOpenHandles",
     "dev": "nodemon server"
   },
   "author": "",

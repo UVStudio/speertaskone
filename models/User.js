@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
+    lowercase: true,
     required: [true, 'Please provide your name'],
     unique: 'Name already exists',
   },

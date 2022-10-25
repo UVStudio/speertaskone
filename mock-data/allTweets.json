@@ -1,17 +1,20 @@
 [
   {
+    "id": "456",
     "content": "first test tweet content",
-    "user": "user",
+    "user": "12434",
     "timeStamp": "12345678"
   },
   {
+    "id": "123",
     "content": "second test tweet content",
-    "user": "user",
+    "user": "12434",
     "timeStamp": "12345679"
   },
   {
+    "id": "789",
     "content": "third test tweet content",
-    "user": "user",
+    "user": "12434",
     "timeStamp": "12345680"
   }
 ]
