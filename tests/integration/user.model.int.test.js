@@ -26,10 +26,11 @@ it(
   }
 );
 
-afterEach(async () => {
-  try {
-    await User.deleteMany({});
-  } catch (err) {
-    console.log(err);
-  }
-});
+// Uncomment this 'afterEach' to clean the User collection after each test
+// afterEach(async () => {
+//   try {
+//     await User.deleteMany({});
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });

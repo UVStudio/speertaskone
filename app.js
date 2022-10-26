@@ -1,16 +1,18 @@
 const express = require('express');
 const app = express();
+const mongodb = require('./mongodb/mongoose');
 const cookieParser = require('cookie-parser');
 
 const user = require('./routes/user.route');
 const tweet = require('./routes/tweet.route');
-const mongodb = require('./mongodb/mongoose');
 
+//connect DB
 mongodb.connect();
 
 app.use(express.json());
 app.use(cookieParser());
 
+//Routes
 app.use('/user', user);
 app.use('/tweet', tweet);
 

@@ -1,6 +1,9 @@
 const Tweet = require('../models/Tweet');
 const User = require('../models/User');
 
+//desc    CREATE tweet
+//route   POST /tweet
+//access  public
 exports.createTweet = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
@@ -17,6 +20,9 @@ exports.createTweet = async (req, res, next) => {
   }
 };
 
+//desc    GET all tweets
+//route   GET /tweet
+//access  public
 exports.getTweets = async (req, res, next) => {
   try {
     const allTweets = await Tweet.find({});
@@ -26,6 +32,9 @@ exports.getTweets = async (req, res, next) => {
   }
 };
 
+//desc    GET tweet by ID
+//route   GET /tweet/:tweetId
+//access  public
 exports.getTweetById = async (req, res, next) => {
   try {
     const tweet = await Tweet.findById(req.params.tweetId);
@@ -39,8 +48,12 @@ exports.getTweetById = async (req, res, next) => {
   }
 };
 
+//desc    UPDATE tweet by ID
+//route   PUT /tweet/:tweetId
+//access  private
 exports.updateTweet = async (req, res, next) => {
   try {
+    //make sure logged in user is same as user of the tweet
     const user = await User.findById(req.user.id);
     const tweet = await Tweet.findById(req.params.tweetId);
 
@@ -63,8 +76,12 @@ exports.updateTweet = async (req, res, next) => {
   }
 };
 
+//desc    DELETE tweet by ID
+//route   DELETE /tweet/:tweetId
+//access  private
 exports.deleteTweet = async (req, res, next) => {
   try {
+    //make sure logged in user is same as user of the tweet
     const user = await User.findById(req.user.id);
     const tweet = await Tweet.findById(req.params.tweetId);
 

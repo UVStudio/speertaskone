@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/userAuth');
-
 const {
   createTweet,
   getTweets,
@@ -9,6 +7,7 @@ const {
   updateTweet,
   deleteTweet,
 } = require('../controllers/tweet.controller');
+const { protect } = require('../middleware/userAuth');
 
 router.post('/', protect, createTweet);
 router.get('/', getTweets);

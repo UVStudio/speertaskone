@@ -1,6 +1,4 @@
 const User = require('../models/User');
-const crypto = require('crypto');
-const mongoose = require('mongoose');
 
 //desc    CREATE user
 //route   POST /user
@@ -12,6 +10,8 @@ exports.createUser = async (req, res, next) => {
     let user = await User.findOne({ name });
 
     if (user) throw new Error('User already exists');
+
+    //make sure there are inputs and password has min of 6 digits
     if (!name || !password || password.length < 6)
       throw new Error('Credentials invalid');
 
@@ -23,6 +23,7 @@ exports.createUser = async (req, res, next) => {
       salt,
     });
 
+    //add token to authenticate user
     sendTokenResponse(user, 200, res);
   } catch (error) {
     next(error);
@@ -36,6 +37,7 @@ exports.loginUser = async (req, res, next) => {
   try {
     const { name, password } = req.body;
 
+    //make sure inputs are complete
     if (!name || !password)
       throw new Error('Please provide a name and password');
 
@@ -44,6 +46,7 @@ exports.loginUser = async (req, res, next) => {
     if (!user) throw new Error('Invalid credentials');
 
     if (User.authenticate(password, user.hashedPassword, user.salt)) {
+      //add token to authenticate user
       sendTokenResponse(user, 200, res);
     } else {
       throw new Error('Invalid credentials');
@@ -74,6 +77,7 @@ exports.getCurrentUser = async (req, res, next) => {
 //access  private
 exports.logOut = async (req, res, next) => {
   try {
+    //remove token from cookies
     res.cookie('token', 'none', {
       expires: new Date(Date.now()),
     });

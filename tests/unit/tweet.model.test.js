@@ -4,7 +4,6 @@ const {
   getTweets,
   getTweetById,
   updateTweet,
-  deleteTweet,
 } = require('../../controllers/tweet.controller');
 const httpMocks = require('node-mocks-http');
 const dotenv = require('dotenv');
@@ -132,12 +131,9 @@ describe('deleteTweet', () => {
     expect(User.findById).toBeCalledWith(newUser.id);
     expect(Tweet.findById).toBeCalledWith(tweetId);
   });
-  // it('should call findByIdAndUpdate', async () => {
-  //   await updateTweet(req, res, next);
-  //   expect(Tweet.findByIdAndUpdate).toBeCalled();
-  // });
 });
 
+// Uncomment this 'afterEach' to clean the Tweet collection after each test
 // afterEach(async () => {
 //   try {
 //     await Tweet.deleteMany({});

@@ -104,6 +104,7 @@ describe('User Password Authentication', () => {
   });
 });
 
+// Uncomment this 'afterEach' to clean the User collection after each test
 afterEach(async () => {
   try {
     await User.deleteMany({});

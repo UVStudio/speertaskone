@@ -1,15 +1,9 @@
 const request = require('supertest');
-const jwt = require('jsonwebtoken');
 const app = require('../../app');
-const User = require('../../models/User');
-const Tweet = require('../../models/Tweet');
-const newUser = require('../../mock-data/newUser.json');
-const newTweet = require('../../mock-data/newTweet.json');
 
 const endpointUrl = '/tweet/';
 
-const testData = { user: '345', content: 'test content', timeStamp: '23280' };
-let firstTweet, newTweetId;
+let firstTweet;
 
 describe(endpointUrl, () => {
   it('GET' + endpointUrl, async () => {
@@ -38,6 +32,7 @@ describe(endpointUrl, () => {
   });
 });
 
+// Uncomment this 'afterEach' to clean the Tweet collection after each test
 // afterEach(async () => {
 //   try {
 //     await Tweet.deleteMany({});

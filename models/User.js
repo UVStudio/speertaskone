@@ -5,7 +5,6 @@ const crypto = require('crypto');
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    lowercase: true,
     required: [true, 'Please provide your name'],
     unique: 'Name already exists',
   },
@@ -19,7 +18,6 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.statics.generateSalt = () => {
   return Math.round(new Date().valueOf() * Math.random()) + '';
-  //return '100';
 };
 
 UserSchema.statics.generateHash = (password, salt) => {
@@ -65,10 +63,6 @@ UserSchema.methods.getSignedJwtToken = function () {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
-
-// UserSchema.methods.matchPassword = async function (enteredPassword, user) {
-
-// };
 
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
